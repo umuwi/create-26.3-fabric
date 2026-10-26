@@ -1,5 +1,6 @@
 package com.zurrtum.create.impl.contraption;
 
+import net.minecraft.world.level.block.RedstoneWireBlock;
 import com.zurrtum.create.AllBlockTags;
 import com.zurrtum.create.AllBlocks;
 import com.zurrtum.create.api.connectivity.ConnectivityHandler;

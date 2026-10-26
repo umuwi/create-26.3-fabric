@@ -1,5 +1,6 @@
 package com.zurrtum.create.client.flywheel.backend.gl.buffer;
 
+import com.mojang.renderpearl.backend.opengl.GlStateManager;
 import com.zurrtum.create.client.flywheel.backend.gl.GlObject;
 import com.zurrtum.create.client.flywheel.lib.memory.FlwMemoryTracker;
 import com.zurrtum.create.client.flywheel.lib.memory.MemoryBlock;

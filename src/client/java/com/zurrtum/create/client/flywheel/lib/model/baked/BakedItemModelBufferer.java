@@ -1,5 +1,6 @@
 package com.zurrtum.create.client.flywheel.lib.model.baked;
 
+import com.mojang.renderpearl.api.pipeline.BlendFunction;
 import com.mojang.blaze3d.vertex.MeshData;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.zurrtum.create.client.flywheel.api.material.Material;

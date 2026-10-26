@@ -1,5 +1,6 @@
 package com.zurrtum.create.client.catnip.gui.render;
 
+import com.mojang.renderpearl.api.textures.FilterMode;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.zurrtum.create.client.catnip.render.CachedBuffers;

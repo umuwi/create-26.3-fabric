@@ -1,5 +1,13 @@
 package com.zurrtum.create.client.flywheel.backend.engine;
 
+import com.mojang.renderpearl.api.pipeline.ColorTargetState;
+import com.mojang.renderpearl.api.textures.FilterMode;
+import com.mojang.renderpearl.api.textures.GpuSampler;
+import com.mojang.renderpearl.api.textures.GpuTextureView;
+import com.mojang.renderpearl.backend.opengl.GlDevice;
+import com.mojang.renderpearl.backend.opengl.GlSampler;
+import com.mojang.renderpearl.backend.opengl.GlStateManager;
+import com.mojang.renderpearl.backend.opengl.GlTexture;
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.zurrtum.create.client.flywheel.api.material.DepthTest;
@@ -18,7 +26,7 @@ import org.lwjgl.opengl.GL33C;
 import java.util.Collections;
 import java.util.Comparator;
 
-import static com.mojang.blaze3d.opengl.GlConst.*;
+import static com.mojang.renderpearl.backend.opengl.GlConst.*;
 
 public final class MaterialRenderState {
     public static final Comparator<Material> COMPARATOR = MaterialRenderState::compare;

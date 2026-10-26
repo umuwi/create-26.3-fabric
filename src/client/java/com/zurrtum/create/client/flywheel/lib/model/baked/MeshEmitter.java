@@ -1,5 +1,6 @@
 package com.zurrtum.create.client.flywheel.lib.model.baked;
 
+import com.mojang.renderpearl.api.pipeline.PrimitiveTopology;
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.ByteBufferBuilder;

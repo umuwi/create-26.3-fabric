@@ -1,5 +1,6 @@
 package com.zurrtum.create.client.catnip.gui.render;
 
+import com.mojang.renderpearl.api.textures.FilterMode;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -74,13 +75,13 @@ public class ItemTransformElementRenderer extends PictureInPictureRenderer<ItemT
             }
             matrices.scale(size, -size, size);
             if (key.zRot != 0) {
-                matrices.mulPose(Axis.ZP.rotation(key.zRot));
+                matrices.rotate(Axis.ZP.rotation(key.zRot));
             }
             if (key.xRot != 0) {
-                matrices.mulPose(Axis.XP.rotation(key.xRot));
+                matrices.rotate(Axis.XP.rotation(key.xRot));
             }
             if (key.yRot != 0) {
-                matrices.mulPose(Axis.YP.rotation(key.yRot));
+                matrices.rotate(Axis.YP.rotation(key.yRot));
             }
             Lighting lighting = Minecraft.getInstance().gameRenderer.lighting();
             if (key.state.usesBlockLight()) {

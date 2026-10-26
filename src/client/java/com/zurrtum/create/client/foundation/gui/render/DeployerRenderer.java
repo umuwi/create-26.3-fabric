@@ -1,5 +1,6 @@
 package com.zurrtum.create.client.foundation.gui.render;
 
+import com.mojang.renderpearl.api.textures.FilterMode;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -52,8 +53,8 @@ public class DeployerRenderer extends GuiBlockRenderer<DeployerRenderState> {
         float scale = 20 * windowScaleFactor;
         matrices.scale(scale, scale, scale);
 
-        matrices.mulPose(Axis.XP.rotationDegrees(-15.5f));
-        matrices.mulPose(Axis.YP.rotationDegrees(22.5f));
+        matrices.rotate(Axis.XP.rotationDegrees(-15.5f));
+        matrices.rotate(Axis.YP.rotationDegrees(22.5f));
         matrices.translate(-0.5f, -2.24f, -0.5f);
         matrices.scale(1, -1, 1);
 

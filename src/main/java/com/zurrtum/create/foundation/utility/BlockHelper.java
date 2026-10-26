@@ -1,5 +1,6 @@
 package com.zurrtum.create.foundation.utility;
 
+import net.minecraft.core.*;
 import com.zurrtum.create.AllBlockTags;
 import com.zurrtum.create.AllBlocks;
 import com.zurrtum.create.api.schematic.nbt.PartialSafeNBT;
@@ -16,7 +17,7 @@ import com.zurrtum.create.content.processing.burner.BlazeBurnerBlock.HeatLevel;
 import com.zurrtum.create.foundation.block.NeighborUpdateListeningBlock;
 import com.zurrtum.create.foundation.blockEntity.IMergeableBE;
 import com.zurrtum.create.foundation.blockEntity.IMultiBlockEntityContainer;
-import net.minecraft.core.*;
+import net.minecraft.core.registries.codec.*;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;

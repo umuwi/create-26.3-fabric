@@ -1,5 +1,6 @@
 package com.zurrtum.create.client.mixin;
 
+import com.mojang.renderpearl.api.buffers.GpuBufferSlice;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;

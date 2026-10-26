@@ -1,5 +1,6 @@
 package com.zurrtum.create.client.catnip.gui.element;
 
+import com.mojang.renderpearl.backend.opengl.GlStateManager;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import org.lwjgl.opengl.GL11;
 

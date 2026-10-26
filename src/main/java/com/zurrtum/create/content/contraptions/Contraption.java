@@ -1,5 +1,6 @@
 package com.zurrtum.create.content.contraptions;
 
+import net.minecraft.core.*;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.mojang.serialization.Codec;
@@ -63,7 +64,7 @@ import com.zurrtum.create.foundation.utility.BlockHelper;
 import com.zurrtum.create.infrastructure.config.AllConfigs;
 import it.unimi.dsi.fastutil.objects.Object2BooleanArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
-import net.minecraft.core.*;
+import net.minecraft.core.registries.codec.*;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;

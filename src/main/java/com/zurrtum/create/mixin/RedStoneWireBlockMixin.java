@@ -1,5 +1,6 @@
 package com.zurrtum.create.mixin;
 
+import net.minecraft.world.level.block.RedstoneWireBlock;
 import com.zurrtum.create.foundation.block.RedStoneConnectBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
