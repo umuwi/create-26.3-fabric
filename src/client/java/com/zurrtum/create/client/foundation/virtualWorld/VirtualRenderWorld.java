@@ -398,15 +398,7 @@ public class VirtualRenderWorld extends Level implements VisualizationLevel, Blo
         return level.enabledFeatures();
     }
 
-    @Override
-    public PotionBrewing potionBrewing() {
-        return level.potionBrewing();
-    }
 
-    @Override
-    public FuelValues fuelValues() {
-        return level.fuelValues();
-    }
 
     // ADDITIONAL OVERRRIDES
 

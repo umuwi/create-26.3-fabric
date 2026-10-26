@@ -301,7 +301,7 @@ public class ContraptionColliderClient {
                 playerType
             );
 
-            entity.hurtMarked = true;
+            entity.needsSync = true;
             Vec3 contactPointMotion = Vec3.ZERO;
 
             if (surfaceCollision) {

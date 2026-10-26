@@ -57,7 +57,7 @@ public class AllItemAttributeTypes {
             return type != EquipmentSlot.Type.HAND;
         }
     );
-    public static final ItemAttributeType FURNACE_FUEL = singleton("furnace_fuel", (s, w) -> w.fuelValues().isFuel(s));
+    public static final ItemAttributeType FURNACE_FUEL = singleton("furnace_fuel", (s, w) -> AllFuelTimes.isFuel(s));
     public static final ItemAttributeType WASHABLE = singleton("washable", AllFanProcessingTypes.SPLASHING::canProcess);
     public static final ItemAttributeType HAUNTABLE = singleton(
         "hauntable",

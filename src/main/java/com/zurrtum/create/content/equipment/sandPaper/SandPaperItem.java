@@ -1,5 +1,6 @@
 package com.zurrtum.create.content.equipment.sandPaper;
 
+import net.minecraft.util.Prediction;
 import com.zurrtum.create.AllDataComponents;
 import com.zurrtum.create.AllRecipeSets;
 import com.zurrtum.create.AllRecipeTypes;
@@ -146,11 +147,11 @@ public class SandPaperItem extends Item {
                 ItemStack polished = recipe.value().assemble(input);
                 Inventory playerInv = player.getInventory();
                 if (!polished.isEmpty()) {
-                    playerInv.placeItemBackInInventory(polished);
+                    playerInv.placeItemBackInInventory(polished, Prediction.SERVER_ONLY);
                 }
                 ItemStackTemplate recipeRemainder = toPolish.getItem().getCraftingRemainder();
                 if (recipeRemainder != null) {
-                    playerInv.placeItemBackInInventory(recipeRemainder.create());
+                    playerInv.placeItemBackInInventory(recipeRemainder.create(), Prediction.SERVER_ONLY);
                 }
             });
 
@@ -182,7 +183,7 @@ public class SandPaperItem extends Item {
         if (stack.has(AllDataComponents.SAND_PAPER_POLISHING)) {
             ItemStack toPolish = stack.get(AllDataComponents.SAND_PAPER_POLISHING).item();
             //noinspection DataFlowIssue - toPolish won't be null as we do call .has before calling .get
-            player.getInventory().placeItemBackInInventory(toPolish);
+            player.getInventory().placeItemBackInInventory(toPolish, Prediction.SERVER_ONLY);
             stack.remove(AllDataComponents.SAND_PAPER_POLISHING);
         }
         return false;

@@ -194,15 +194,7 @@ public class SchematicChunkSource extends ChunkSource {
                 return access;
             }
 
-            @Override
-            public PotionBrewing potionBrewing() {
-                return null;
-            }
 
-            @Override
-            public FuelValues fuelValues() {
-                return null;
-            }
 
             @Override
             public List<? extends Player> players() {

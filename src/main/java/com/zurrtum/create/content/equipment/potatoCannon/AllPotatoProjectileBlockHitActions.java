@@ -34,9 +34,6 @@ public class AllPotatoProjectileBlockHitActions {
     }
 
     public record PlantCrop(Holder<Block> cropBlock) implements PotatoProjectileBlockHitAction {
-        public static final MapCodec<PlantCrop> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-                BuiltInRegistries.BLOCK.holderByNameCodec().fieldOf("block").forGetter(PlantCrop::cropBlock))
-            .apply(instance, PlantCrop::new));
 
         @SuppressWarnings("deprecation")
         public PlantCrop(Block cropBlock) {
@@ -69,16 +66,9 @@ public class AllPotatoProjectileBlockHitActions {
             return true;
         }
 
-        @Override
-        public MapCodec<? extends PotatoProjectileBlockHitAction> codec() {
-            return CODEC;
-        }
     }
 
     public record PlaceBlockOnGround(Holder<Block> block) implements PotatoProjectileBlockHitAction {
-        public static final MapCodec<PlaceBlockOnGround> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-                BuiltInRegistries.BLOCK.holderByNameCodec().fieldOf("block").forGetter(PlaceBlockOnGround::block))
-            .apply(instance, PlaceBlockOnGround::new));
 
         @SuppressWarnings("deprecation")
         public PlaceBlockOnGround(Block block) {
@@ -126,9 +116,5 @@ public class AllPotatoProjectileBlockHitActions {
             return true;
         }
 
-        @Override
-        public MapCodec<? extends PotatoProjectileBlockHitAction> codec() {
-            return CODEC;
-        }
     }
 }

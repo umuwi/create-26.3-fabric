@@ -304,15 +304,7 @@ public class WrappedLevel extends Level {
         return level.registryAccess();
     }
 
-    @Override
-    public PotionBrewing potionBrewing() {
-        return level.potionBrewing();
-    }
 
-    @Override
-    public FuelValues fuelValues() {
-        return level.fuelValues();
-    }
 
     @Override
     public void updateNeighbourForOutputSignal(BlockPos p_175666_1_, Block p_175666_2_) {

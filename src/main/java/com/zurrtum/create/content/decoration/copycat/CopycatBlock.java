@@ -1,5 +1,6 @@
 package com.zurrtum.create.content.decoration.copycat;
 
+import net.minecraft.util.Prediction;
 import com.zurrtum.create.AllBlockEntityTypes;
 import com.zurrtum.create.AllBlockTags;
 import com.zurrtum.create.AllBlocks;
@@ -68,7 +69,7 @@ public abstract class CopycatBlock extends Block implements IBE<CopycatBlockEnti
                 }
                 Player player = context.getPlayer();
                 if (!player.isCreative()) {
-                    player.getInventory().placeItemBackInInventory(consumedItem);
+                    player.getInventory().placeItemBackInInventory(consumedItem, Prediction.SERVER_ONLY);
                 }
                 context.getLevel().levelEvent(
                     LevelEvent.PARTICLES_DESTROY_BLOCK,
