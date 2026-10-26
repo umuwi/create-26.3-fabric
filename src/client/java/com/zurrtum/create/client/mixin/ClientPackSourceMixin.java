@@ -1,5 +1,7 @@
 package com.zurrtum.create.client.mixin;
 
+import net.minecraft.server.packs.PackMetadataResources;
+import java.util.stream.Stream;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 import net.fabricmc.loader.api.metadata.ModMetadata;
@@ -117,16 +119,17 @@ public abstract class ClientPackSourceMixin {
         for (Path path : rootPaths) {
             builder.pushAssetPath(PackType.CLIENT_RESOURCES, path.resolve(directory));
         }
-        VanillaPackResources pack = builder.build(info);
+        // 26.3: ResourcesSupplier отдаёт отдельно метаданные и поток слоёв пака.
+        PackResources pack = builder.build(info).fullResources();
         Pack.ResourcesSupplier packFactory = new Pack.ResourcesSupplier() {
             @Override
-            public @NonNull PackResources openPrimary(@NonNull PackLocationInfo info) {
+            public @NonNull PackMetadataResources openMetadata(@NonNull PackLocationInfo info) {
                 return pack;
             }
 
             @Override
-            public @NonNull PackResources openFull(@NonNull PackLocationInfo info, @NonNull Metadata metadata) {
-                return pack;
+            public @NonNull Stream<PackResources> openResources(@NonNull PackLocationInfo info, @NonNull Metadata metadata) {
+                return Stream.of(pack);
             }
         };
         return Pack.readMetaAndCreate(info, packFactory, PackType.CLIENT_RESOURCES, position);

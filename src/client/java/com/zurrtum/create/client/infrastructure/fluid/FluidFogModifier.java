@@ -1,5 +1,8 @@
 package com.zurrtum.create.client.infrastructure.fluid;
 
+import net.minecraft.util.ARGB;
+import org.joml.Vector3fc;
+import org.joml.Vector3f;
 import com.zurrtum.create.client.AllFluidConfigs;
 import com.zurrtum.create.content.equipment.armor.DivingHelmetItem;
 import net.minecraft.client.Camera;
@@ -40,10 +43,11 @@ public class FluidFogModifier extends WaterFogEnvironment {
     }
 
     @Override
-    public int getBaseColor(ClientLevel world, Camera camera, int viewDistance, float skyDarkness) {
+    public Vector3fc getBaseColor(ClientLevel world, Camera camera, int viewDistance, float skyDarkness) {
         int color = AllFluidConfigs.FOG_COLOR.getOrDefault(world.getFluidState(camera.blockPosition()).getType(), -1);
         if (color != -1) {
-            return color;
+            // 26.3: базовый цвет тумана — Vector3fc вместо ARGB.
+            return new Vector3f(ARGB.redFloat(color), ARGB.greenFloat(color), ARGB.blueFloat(color));
         }
         return super.getBaseColor(world, camera, viewDistance, skyDarkness);
     }

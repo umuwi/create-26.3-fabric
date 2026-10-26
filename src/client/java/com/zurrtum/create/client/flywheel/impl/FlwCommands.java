@@ -1,5 +1,6 @@
 package com.zurrtum.create.client.flywheel.impl;
 
+import net.minecraft.world.entity.Entity;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
@@ -164,9 +165,7 @@ public final class FlwCommands {
                         null,
                         null,
                         null,
-                        null,
-                        null,
-                        null
+                        (Entity) null
                     ));
                     int value = IntegerArgumentType.getInteger(context, "stage");
 

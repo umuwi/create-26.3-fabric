@@ -1,5 +1,6 @@
 package com.zurrtum.create.client.flywheel.api.material;
 
+import com.mojang.renderpearl.api.pipeline.ColorTargetState;
 
 public enum WriteMask {
     /**

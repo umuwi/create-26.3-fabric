@@ -1,5 +1,6 @@
 package com.zurrtum.create.client.mixin;
 
+import net.minecraft.core.Direction;
 import com.mojang.blaze3d.vertex.PoseStack.Pose;
 import com.zurrtum.create.client.flywheel.lib.model.baked.BufferColorPoseEmitter;
 import com.zurrtum.create.client.flywheel.lib.model.baked.BufferPoseEmitter;
@@ -22,7 +23,7 @@ public interface BufferColorPoseEmitterMixin extends BufferPoseEmitter, FabricEm
         Pose pose = getPose();
         return Renderer.get().quadEmitter(quad -> {
             quad.multiplyColor(color);
-            quad.buffer(OverlayTexture.NO_OVERLAY, pose, getBuffer(quad.diffuseShade(), quad.chunkLayer()));
+            quad.buffer(OverlayTexture.NO_OVERLAY, pose, getBuffer(quad.shadeDirectionOverride() != Direction.UP, quad.chunkLayer()));
         });
     }
 }

@@ -1,5 +1,6 @@
 package com.zurrtum.create.client.mixin;
 
+import net.minecraft.core.Direction;
 import com.mojang.blaze3d.vertex.PoseStack.Pose;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.zurrtum.create.client.flywheel.lib.model.baked.BufferAoPoseEmitter;
@@ -25,7 +26,7 @@ public interface BufferAoPoseEmitterMixin extends FabricEmitterSupplier {
     default @NonNull QuadEmitter quadEmitter() {
         Pose pose = getPose();
         return Renderer.get().quadEmitter(quad -> {
-            VertexConsumer buffer = getBuffer(quad.chunkLayer(), quad.diffuseShade(), quad.ambientOcclusion().get());
+            VertexConsumer buffer = getBuffer(quad.chunkLayer(), quad.shadeDirectionOverride() != Direction.UP, quad.ambientOcclusion().get());
             if (buffer == null) {
                 return;
             }

@@ -137,8 +137,10 @@ public class FactoryPanelModel extends WrapperBlockStateModel {
                 info.sprite(),
                 info.layer(),
                 info.itemRenderType(),
+                info.itemGlintRenderType(),
+                info.itemGlintSpecialRenderType(),
                 info.tintIndex(),
-                false,
+                Direction.UP, // 26.3: «без затенения» = яркость верхней грани
                 info.lightEmission()
             );
         }

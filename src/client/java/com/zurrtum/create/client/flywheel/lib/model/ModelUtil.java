@@ -67,9 +67,12 @@ public final class ModelUtil {
         ITEM_CHUNK_MATERIALS.put(RenderTypes.translucentMovingBlock(), ENTITY_MATERIALS[10]);
         ITEM_CHUNK_MATERIALS.put(Sheets.translucentBlockItemSheet(), Materials.TRANSLUCENT_ITEM_ENTITY_BLOCK);
         ITEM_CHUNK_MATERIALS.put(Sheets.translucentItemSheet(), Materials.TRANSLUCENT_ITEM_ENTITY_ITEM);
-        ITEM_CHUNK_MATERIALS.put(RenderTypes.glint(), Materials.GLINT);
-        ITEM_CHUNK_MATERIALS.put(RenderTypes.glintTranslucent(), Materials.GLINT);
-        ITEM_CHUNK_MATERIALS.put(RenderTypes.entityGlint(), Materials.GLINT_ENTITY);
+        // 26.3: блеск рисуется тем же проходом, что и основа (item*Glint), отдельного слоя нет.
+        // Во Flywheel такие предметы идут без блеска, но с текстурой.
+        ITEM_CHUNK_MATERIALS.put(Sheets.cutoutBlockItemGlintSheet(), ENTITY_MATERIALS[6]);
+        ITEM_CHUNK_MATERIALS.put(Sheets.cutoutItemGlintSheet(), ENTITY_MATERIALS[6]);
+        ITEM_CHUNK_MATERIALS.put(Sheets.translucentBlockItemGlintSheet(), Materials.TRANSLUCENT_ITEM_ENTITY_BLOCK);
+        ITEM_CHUNK_MATERIALS.put(Sheets.translucentItemGlintSheet(), Materials.TRANSLUCENT_ITEM_ENTITY_ITEM);
     }
 
     private ModelUtil() {

@@ -34,9 +34,9 @@ public class BakedItemModelBufferer {
     static final List<RenderType> CHUNK_LAYERS = List.of(
         Sheets.cutoutBlockItemSheet(),
         Sheets.translucentItemSheet(),
-        RenderTypes.glint(),
-        RenderTypes.glintTranslucent(),
-        RenderTypes.entityGlint()
+        Sheets.cutoutBlockItemGlintSheet(),
+        Sheets.translucentItemGlintSheet(),
+        Sheets.cutoutItemGlintSheet()
     );
 
     public static void bufferItemStack(

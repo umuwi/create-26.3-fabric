@@ -269,3 +269,6 @@ accessible field net/minecraft/client/gui/render/pip/PictureInPictureRenderer te
 accessible field net/minecraft/client/gui/render/pip/PictureInPictureRenderer depthTextureView Lcom/mojang/renderpearl/api/textures/GpuTextureView;
 accessible field net/minecraft/client/player/FirstPersonHandsAndItems mainHandItem Lnet/minecraft/world/item/ItemStack;
 accessible field net/minecraft/client/player/FirstPersonHandsAndItems offHandItem Lnet/minecraft/world/item/ItemStack;
+accessible field net/minecraft/client/resources/model/ModelBakery BREAKING_LOCATIONS Ljava/util/List;
+accessible field com/mojang/renderpearl/frontend/FrontendGpuDevice backend Lcom/mojang/renderpearl/backend/api/GpuDeviceBackend;
+accessible method net/minecraft/client/renderer/entity/EntityRenderer getBoundingBoxForCulling (Lnet/minecraft/world/entity/Entity;F)Lnet/minecraft/world/phys/AABB;

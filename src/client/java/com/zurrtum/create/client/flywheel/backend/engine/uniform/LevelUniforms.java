@@ -42,9 +42,10 @@ public final class LevelUniforms extends UniformWriter {
         LevelInfoHolder levelInfoHolder = (LevelInfoHolder) levelRenderState;
         SkyRenderState skyRenderState = levelRenderState.skyRenderState;
 
-        int skyColor = skyRenderState.skyColor;
+        // 26.3: цвет неба — Vector3fc (0..1), а не упакованный ARGB.
+        Vector3fc skyColor = skyRenderState.skyColor;
         int cloudColor = levelRenderState.cloudColor;
-        ptr = writeVec4(ptr, ARGB.redFloat(skyColor), ARGB.greenFloat(skyColor), ARGB.blueFloat(skyColor), 1.0f);
+        ptr = writeVec4(ptr, skyColor.x(), skyColor.y(), skyColor.z(), 1.0f);
         ptr = writeVec4(ptr, ARGB.redFloat(cloudColor), ARGB.greenFloat(cloudColor), ARGB.blueFloat(cloudColor), 1.0f);
 
         ptr = writeVec3(ptr, LIGHT_DIRECTION[0], LIGHT_DIRECTION[1], LIGHT_DIRECTION[2]);

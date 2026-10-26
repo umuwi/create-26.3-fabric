@@ -1,5 +1,6 @@
 package com.zurrtum.create.client.flywheel.backend.engine;
 
+import com.mojang.renderpearl.frontend.FrontendGpuDevice;
 import com.mojang.renderpearl.api.pipeline.ColorTargetState;
 import com.mojang.renderpearl.api.textures.FilterMode;
 import com.mojang.renderpearl.api.textures.GpuSampler;
@@ -182,11 +183,11 @@ public final class MaterialRenderState {
 
     public static void setupFrameBuffer() {
         RenderTarget target = Minecraft.getInstance().gameRenderer.mainRenderTarget();
-        GlDevice device = (GlDevice) RenderSystem.getDevice().backend;
+        GlDevice device = (GlDevice) ((FrontendGpuDevice) RenderSystem.getDevice()).backend;
         int fbo = device.frameBufferCache().getFbo(
             device.directStateAccess(),
             Collections.singletonList((GlTexture) target.getColorTexture()),
-            target.useDepth ? (GlTexture) target.getDepthTexture() : null
+            target.hasDepth() ? (GlTexture) target.getDepthTexture() : null
         );
         GlStateManager._glBindFramebuffer(GL_FRAMEBUFFER, fbo);
     }
