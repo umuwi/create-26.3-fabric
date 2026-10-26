@@ -1,6 +1,5 @@
 package com.zurrtum.create.client.mixin;
 
-import com.mojang.blaze3d.buffers.GpuBufferSlice;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.zurrtum.create.client.flywheel.backend.engine.uniform.FogUniforms;
 import com.zurrtum.create.client.flywheel.backend.gl.GlCompat;

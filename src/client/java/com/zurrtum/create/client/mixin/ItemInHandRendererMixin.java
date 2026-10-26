@@ -8,7 +8,6 @@ import com.zurrtum.create.client.content.equipment.armor.NetheriteBacktankFirstP
 import com.zurrtum.create.client.content.equipment.extendoGrip.ExtendoGripRenderHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.core.ClientAsset;

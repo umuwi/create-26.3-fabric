@@ -1,6 +1,5 @@
 package com.zurrtum.create.client;
 
-import com.mojang.blaze3d.opengl.GlStateManager;
 import com.zurrtum.create.*;
 import com.zurrtum.create.AllParticleTypes;
 import com.zurrtum.create.catnip.animation.LerpedFloat;

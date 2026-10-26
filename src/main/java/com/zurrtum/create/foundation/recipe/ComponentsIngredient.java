@@ -1,5 +1,6 @@
 package com.zurrtum.create.foundation.recipe;
 
+import net.minecraft.core.component.TypedDataComponent;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
@@ -72,24 +73,17 @@ public class ComponentsIngredient extends Ingredient {
         }
 
         // None strict matching
-        for (Map.Entry<DataComponentType<?>, Object> entry : components.entrySet()) {
-            final DataComponentType<?> type = entry.getKey();
-            final Optional<?> value = entry.getValue();
-
-            if (value.isPresent()) {
-                // Expect the stack to contain a matching component
-                if (!stack.has(type)) {
-                    return false;
-                }
-
-                if (!Objects.equals(value.get(), stack.get(type))) {
-                    return false;
-                }
-            } else {
-                // Expect the target stack to not contain this component
-                if (stack.has(type)) {
-                    return false;
-                }
+        // 26.3: в патче удалённый компонент — служебный маркер, а не Optional.empty(), поэтому
+        // идём по split(): добавленные должны совпасть, удалённых у предмета быть не должно.
+        DataComponentPatch.SplitResult split = components.split();
+        for (TypedDataComponent<?> component : split.added()) {
+            if (!Objects.equals(component.value(), stack.get(component.type()))) {
+                return false;
+            }
+        }
+        for (DataComponentType<?> type : split.removed()) {
+            if (stack.has(type)) {
+                return false;
             }
         }
 

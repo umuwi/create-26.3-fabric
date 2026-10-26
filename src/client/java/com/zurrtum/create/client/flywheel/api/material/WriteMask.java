@@ -1,6 +1,5 @@
 package com.zurrtum.create.client.flywheel.api.material;
 
-import com.mojang.blaze3d.pipeline.ColorTargetState;
 
 public enum WriteMask {
     /**

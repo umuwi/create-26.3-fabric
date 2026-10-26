@@ -1,5 +1,6 @@
 package com.zurrtum.create.mixin;
 
+import net.minecraft.util.Prediction;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -182,7 +183,7 @@ public abstract class LivingEntityMixin extends Entity {
             case 1 -> AllSynchedDatas.CRUSH_DROP.set(this, false);
             case 2 -> AllSynchedDatas.CAPTURE_DROPS.get(this).ifPresent(drops -> {
                 Inventory inventory = ((DeployerPlayer) source.getEntity()).cast().getInventory();
-                drops.forEach(inventory::placeItemBackInInventory);
+                drops.forEach(stack -> inventory.placeItemBackInInventory(stack, Prediction.SERVER_ONLY));
                 AllSynchedDatas.CAPTURE_DROPS.set(this, Optional.empty());
             });
         }

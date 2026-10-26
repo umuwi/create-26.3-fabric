@@ -1,6 +1,5 @@
 package com.zurrtum.create.client.flywheel.backend.gl;
 
-import com.mojang.blaze3d.opengl.GlStateManager;
 
 import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
 

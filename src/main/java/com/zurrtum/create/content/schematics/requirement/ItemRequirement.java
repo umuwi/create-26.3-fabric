@@ -1,5 +1,6 @@
 package com.zurrtum.create.content.schematics.requirement;
 
+import net.minecraft.world.level.block.PathBlock;
 import com.zurrtum.create.api.schematic.requirement.SchematicRequirementRegistries;
 import com.zurrtum.create.api.schematic.requirement.SpecialBlockEntityItemRequirement;
 import com.zurrtum.create.api.schematic.requirement.SpecialBlockItemRequirement;
@@ -119,7 +120,7 @@ public class ItemRequirement {
         //                ItemUseType.CONSUME,
         //                BuiltInRegistries.ITEM.get(Mods.FD.asResource("rich_soil"))
         //            );
-        if (block instanceof FarmlandBlock || block instanceof DirtPathBlock) {
+        if (block instanceof FarmlandBlock || block instanceof PathBlock) {
             return new ItemRequirement(ItemUseType.CONSUME, Items.DIRT);
         }
         if (block instanceof AbstractBannerBlock && be instanceof BannerBlockEntity bannerBE) {

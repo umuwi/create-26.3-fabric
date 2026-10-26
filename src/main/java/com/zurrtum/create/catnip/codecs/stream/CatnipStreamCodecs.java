@@ -41,15 +41,17 @@ public interface CatnipStreamCodecs {
         Function.identity(),
         tag -> (CompoundTag) tag
     );
+    // 26.3: FriendlyByteBuf.readCollection/writeCollection убраны.
+    StreamCodec<ByteBuf, ListTag> LIST_OF_COMPOUNDS = ByteBufCodecs.collection(size -> new ListTag(), COMPOUND_AS_TAG);
     StreamCodec<FriendlyByteBuf, ListTag> COMPOUND_LIST_TAG = new StreamCodec<>() {
         @Override
         public ListTag decode(FriendlyByteBuf buffer) {
-            return buffer.readCollection(size -> new ListTag(), COMPOUND_AS_TAG);
+            return LIST_OF_COMPOUNDS.decode(buffer);
         }
 
         @Override
         public void encode(FriendlyByteBuf buffer, ListTag value) {
-            buffer.writeCollection(value, COMPOUND_AS_TAG);
+            LIST_OF_COMPOUNDS.encode(buffer, value);
         }
     };
     StreamCodec<ByteBuf, BlockState> BLOCK_STATE = ByteBufCodecs.idMapper(Block.BLOCK_STATE_REGISTRY);

@@ -1,6 +1,5 @@
 package com.zurrtum.create.client.mixin;
 
-import com.mojang.blaze3d.pipeline.RenderPipeline;
 import com.zurrtum.create.client.catnip.render.PonderRenderPipelines;
 import com.zurrtum.create.client.foundation.render.AllRenderPipelines;
 import it.unimi.dsi.fastutil.Function;

@@ -1,6 +1,5 @@
 package com.zurrtum.create.client.foundation.render;
 
-import com.mojang.blaze3d.pipeline.RenderPipeline;
 
 public interface CustomRenderPipeline {
     boolean create$isSolidBlend();

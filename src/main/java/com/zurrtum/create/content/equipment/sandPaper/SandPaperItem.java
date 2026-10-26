@@ -1,5 +1,6 @@
 package com.zurrtum.create.content.equipment.sandPaper;
 
+import com.zurrtum.create.foundation.utility.AxeTransformHelper;
 import net.minecraft.util.Prediction;
 import com.zurrtum.create.AllDataComponents;
 import com.zurrtum.create.AllRecipeSets;
@@ -197,7 +198,7 @@ public class SandPaperItem extends Item {
         BlockPos pos = context.getClickedPos();
         BlockState state = level.getBlockState(pos);
 
-        Optional<BlockState> newState = ((AxeItem) Items.DIAMOND_AXE).getStripped(state);
+        Optional<BlockState> newState = AxeTransformHelper.getTransformed(level, pos, context.getClickedFace());
         if (newState.isPresent()) {
             AllSoundEvents.SANDING_LONG.play(
                 level,
