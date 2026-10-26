@@ -1,5 +1,6 @@
 package com.zurrtum.create.client.catnip.render;
 
+import com.zurrtum.create.client.foundation.model.QuadShade;
 import com.mojang.blaze3d.vertex.PoseStack.Pose;
 import com.mojang.blaze3d.vertex.QuadInstance;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -19,7 +20,7 @@ public class EntityBlockTransformSbbBuilder extends EntityBlockSbbBuilder implem
     @Override
     public void put(float x, float y, float z, BakedQuad quad, QuadInstance instance) {
         MaterialInfo info = quad.materialInfo();
-        VertexConsumer buffer = getBuffer(info.shade(), info.layer());
+        VertexConsumer buffer = getBuffer(QuadShade.isShaded(info), info.layer());
         if (x != 0 || y != 0 || z != 0) {
             target.set(origin);
             target.translate(x, y, z);

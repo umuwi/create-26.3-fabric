@@ -102,7 +102,7 @@ public class EntityBlockRenderer extends PictureInPictureRenderer<EntityBlockRen
             }
         }
         matrices.popPose();
-        featureRenderDispatcher.renderAllFeatures(submitNodeStorage);
+        texture.renderFeatures(featureRenderDispatcher, submitNodeStorage);
         gameRenderer.useUiLightmap = lightOption;
         texture.clear();
         state.addBlitToCurrentLayer(new BlitRenderState(

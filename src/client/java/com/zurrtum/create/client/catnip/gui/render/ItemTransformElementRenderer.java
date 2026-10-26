@@ -91,7 +91,7 @@ public class ItemTransformElementRenderer extends PictureInPictureRenderer<ItemT
             }
             key.state.submit(matrices, submitNodeStorage, 0, OverlayTexture.NO_OVERLAY, 0);
             matrices.popPose();
-            featureRenderDispatcher.renderAllFeatures(submitNodeStorage);
+            texture.renderFeatures(featureRenderDispatcher, submitNodeStorage);
             texture.clear();
         }
         state.addBlitToCurrentLayer(new BlitRenderState(

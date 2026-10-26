@@ -1,5 +1,6 @@
 package com.zurrtum.create.client.mixin;
 
+import com.zurrtum.create.client.catnip.gui.render.GpuTexture;
 import com.mojang.renderpearl.api.buffers.GpuBufferSlice;
 import com.mojang.renderpearl.api.textures.GpuTextureView;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -37,13 +38,13 @@ public class QuadParticleFeatureRendererMixin implements DynamicTransformsHolder
 
     @ModifyVariable(method = "executeGroup(Lnet/minecraft/client/renderer/feature/FeatureFrameContext;ILjava/util/List;Z)V", at = @At("STORE"), name = "colorTextureView")
     private GpuTextureView getColorTexture(GpuTextureView colorTextureView) {
-        return RenderSystem.outputColorTextureOverride == null ? colorTextureView :
-            RenderSystem.outputColorTextureOverride;
+        GpuTexture target = GpuTexture.current();
+        return target == null ? colorTextureView : target.textureView();
     }
 
     @ModifyVariable(method = "executeGroup(Lnet/minecraft/client/renderer/feature/FeatureFrameContext;ILjava/util/List;Z)V", at = @At("STORE"), name = "depthTextureView")
     private GpuTextureView getDepthTexture(GpuTextureView depthTextureView) {
-        return RenderSystem.outputDepthTextureOverride == null ? depthTextureView :
-            RenderSystem.outputDepthTextureOverride;
+        GpuTexture target = GpuTexture.current();
+        return target == null ? depthTextureView : target.depthTextureView();
     }
 }

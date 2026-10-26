@@ -1,5 +1,6 @@
 package com.zurrtum.create.client.ponder.foundation.render;
 
+import com.mojang.renderpearl.api.commands.RenderPass;
 import com.mojang.renderpearl.api.textures.FilterMode;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -79,12 +80,12 @@ public class SceneRenderer extends PictureInPictureRenderer<SceneRenderState> {
             QuadParticleFeatureRenderer.TYPE);
         Matrix4f particleTransforms = RenderSystem.getModelViewMatrixCopy().mul(matrices.last().pose());
         particle.ponder$updateTransforms(RenderSystem.getDynamicUniforms().writeTransform(particleTransforms));
-        try (FeatureRenderDispatcher.PreparedFrame frame = featureRenderDispatcher.prepareFrame(submitNodeStorage)) {
-            frame.executeSolid();
-            frame.executeTranslucent();
-            frame.executeOutline();
-            frame.executeTranslucentAfterTerrain();
-            frame.executeAlwaysOnTop();
+        try (FeatureRenderDispatcher.PreparedFrame frame = featureRenderDispatcher.prepareFrame(submitNodeStorage); RenderPass pass = texture.openPass()) {
+            frame.executeSolid(pass);
+            frame.executeTranslucent(pass);
+            frame.executeTranslucentAfterTerrain(pass);
+            frame.executeSeeThrough(pass);
+            frame.executeAlwaysOnTop(pass);
         }
         particle.ponder$updateTransforms(null);
         scene.resetParticles();

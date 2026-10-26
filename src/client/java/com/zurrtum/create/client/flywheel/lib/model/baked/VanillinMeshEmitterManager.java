@@ -1,5 +1,6 @@
 package com.zurrtum.create.client.flywheel.lib.model.baked;
 
+import com.zurrtum.create.client.foundation.model.QuadShade;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.PoseStack.Pose;
@@ -38,7 +39,7 @@ public class VanillinMeshEmitterManager extends MeshEmitterManager<MeshEmitter> 
     @Override
     public void put(float x, float y, float z, BakedQuad quad, QuadInstance instance) {
         MaterialInfo info = quad.materialInfo();
-        BufferBuilder buffer = getBuffer(info.layer(), info.shade(), useAo);
+        BufferBuilder buffer = getBuffer(info.layer(), QuadShade.isShaded(info), useAo);
         if (buffer != null) {
             if (x != 0.0F || y != 0.0F || z != 0.0F) {
                 poseStack.pushPose();

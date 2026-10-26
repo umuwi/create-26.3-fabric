@@ -1,5 +1,6 @@
 package com.zurrtum.create.client.catnip.render;
 
+import com.zurrtum.create.client.foundation.model.QuadShade;
 import com.mojang.blaze3d.vertex.QuadInstance;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.zurrtum.create.client.flywheel.lib.model.baked.BufferEmitter;
@@ -33,7 +34,7 @@ public class EntityBlockSbbBuilder implements BufferEmitter {
     @Override
     public void put(float x, float y, float z, BakedQuad quad, QuadInstance instance) {
         MaterialInfo info = quad.materialInfo();
-        getBuffer(info.shade(), info.layer()).putBlockBakedQuad(x, y, z, quad, instance);
+        getBuffer(QuadShade.isShaded(info), info.layer()).putBlockBakedQuad(x, y, z, quad, instance);
     }
 
     public SuperByteBuffer build() {

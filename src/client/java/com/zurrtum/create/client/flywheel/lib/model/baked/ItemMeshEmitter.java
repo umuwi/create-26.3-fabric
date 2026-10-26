@@ -1,5 +1,6 @@
 package com.zurrtum.create.client.flywheel.lib.model.baked;
 
+import com.zurrtum.create.client.foundation.model.QuadShade;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.renderpearl.api.pipeline.PrimitiveTopology;
 import com.mojang.renderpearl.api.vertex.*;
@@ -73,7 +74,7 @@ public class ItemMeshEmitter implements VertexConsumer {
     }
 
     private void prepareForGeometry(BakedQuad quad) {
-        prepareForGeometry(quad.materialInfo().shade());
+        prepareForGeometry(QuadShade.isShaded(quad.materialInfo()));
     }
 
     private void emit() {

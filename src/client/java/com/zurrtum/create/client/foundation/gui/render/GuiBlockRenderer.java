@@ -1,5 +1,6 @@
 package com.zurrtum.create.client.foundation.gui.render;
 
+import com.zurrtum.create.client.catnip.gui.render.GpuTexture;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -34,8 +35,6 @@ public abstract class GuiBlockRenderer<T extends PictureInPictureRenderState> ex
             blitTexture(renderState, guiRenderState);
         } else {
             prepareTexturesAndProjection(needsAResize, width, height);
-            RenderSystem.outputColorTextureOverride = textureView;
-            RenderSystem.outputDepthTextureOverride = depthTextureView;
             Matrix4fStack modelViewStack = RenderSystem.getModelViewStack();
             modelViewStack.pushMatrix();
             PoseStack poseStack = new PoseStack();
@@ -45,8 +44,6 @@ public abstract class GuiBlockRenderer<T extends PictureInPictureRenderState> ex
             renderToTexture(renderState, poseStack, submitNodeStorage);
             renderAllFeatures(featureRenderDispatcher);
             modelViewStack.popMatrix();
-            RenderSystem.outputColorTextureOverride = null;
-            RenderSystem.outputDepthTextureOverride = null;
             blitTexture(renderState, guiRenderState);
         }
     }
@@ -56,7 +53,14 @@ public abstract class GuiBlockRenderer<T extends PictureInPictureRenderState> ex
         Lighting lighting = mc.gameRenderer.lighting();
         lighting.updateBuffer(Lighting.Entry.LEVEL, getLight0(), getLight1());
         lighting.setupFor(Lighting.Entry.LEVEL);
-        featureRenderDispatcher.renderAllFeatures(submitNodeStorage);
+        // Наследники с собственной текстурой (TEXTURES) готовят её через GpuTexture.prepare().
+        GpuTexture target = GpuTexture.current();
+        GpuTexture.renderFeatures(
+            featureRenderDispatcher,
+            submitNodeStorage,
+            target != null ? target.textureView() : textureView,
+            target != null ? target.depthTextureView() : depthTextureView
+        );
         if (mc.level != null) {
             lighting.updateLevel(mc.level.dimensionType().cardinalLightType());
         } else {
