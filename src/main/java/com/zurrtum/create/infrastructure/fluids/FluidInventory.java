@@ -963,7 +963,7 @@ public interface FluidInventory extends Clearable, Iterable<FluidStack> {
     default FluidStack removeMaxSize(FluidStack stack, Optional<Integer> max) {
         PatchedDataComponentMap components = stack.directComponents();
         components.ensureMapOwnership();
-        components.patch.remove(AllDataComponents.FLUID_MAX_CAPACITY, max);
+        components.patch.remove(AllDataComponents.FLUID_MAX_CAPACITY, max.orElseThrow());
         return stack;
     }
 
@@ -1000,7 +1000,8 @@ public interface FluidInventory extends Clearable, Iterable<FluidStack> {
     default void setMaxSize(FluidStack stack, Optional<Integer> max) {
         PatchedDataComponentMap components = stack.directComponents();
         components.ensureMapOwnership();
-        components.patch.put(AllDataComponents.FLUID_MAX_CAPACITY, max);
+        // 26.3: в патче лежат сами значения (раньше Optional), «удалён» — отдельный маркер.
+        components.patch.put(AllDataComponents.FLUID_MAX_CAPACITY, max.orElseThrow());
     }
 
     void setStack(int slot, FluidStack stack);

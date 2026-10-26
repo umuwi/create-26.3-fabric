@@ -1,5 +1,9 @@
 package com.zurrtum.create.client.mixin;
 
+import com.zurrtum.create.foundation.block.SoundControlBlock;
+import net.minecraft.world.level.block.SoundType;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.google.common.collect.Sets;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.zurrtum.create.client.AllExtensions;
@@ -129,5 +133,14 @@ public abstract class ClientLevelMixin extends Level {
                 }
             }
         }
+    }
+
+    // 26.3: звук удара по ломаемому блоку переехал из MultiPlayerGameMode.continueDestroyBlock сюда.
+    @WrapOperation(method = "playBreakingSound(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;getSoundType()Lnet/minecraft/world/level/block/SoundType;"))
+    private SoundType getHitSound(BlockState state, Operation<SoundType> original, @Local(argsOnly = true) BlockPos pos) {
+        if (state.getBlock() instanceof SoundControlBlock block) {
+            return block.getSoundGroup((ClientLevel) (Object) this, pos);
+        }
+        return original.call(state);
     }
 }

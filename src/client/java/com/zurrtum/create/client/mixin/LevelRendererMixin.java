@@ -91,28 +91,35 @@ public abstract class LevelRendererMixin implements RenderContextHolder {
         renderContext.updateProjection(projection);
     }
 
-    @Inject(method = "render(Lcom/mojang/blaze3d/resource/GraphicsResourceAllocator;Lnet/minecraft/client/DeltaTracker;ZLnet/minecraft/client/renderer/state/level/CameraRenderState;Lorg/joml/Matrix4fc;Lcom/mojang/blaze3d/buffers/GpuBufferSlice;Lorg/joml/Vector4f;Z)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/DeltaTracker;getGameTimeDeltaPartialTick(Z)F"))
+    // 26.3: render без DeltaTracker/modelView, есть consistentDepthRequired; хватает HEAD.
+    @Inject(method = "render(Lcom/mojang/blaze3d/resource/GraphicsResourceAllocator;ZLnet/minecraft/client/renderer/state/level/CameraRenderState;Lcom/mojang/renderpearl/api/buffers/GpuBufferSlice;Lorg/joml/Vector4f;ZZ)V", at = @At("HEAD"))
     private void flywheel$beginRender(
         GraphicsResourceAllocator resourceAllocator,
-        DeltaTracker deltaTracker,
         boolean renderOutline,
         CameraRenderState cameraState,
-        Matrix4fc modelViewMatrix,
         GpuBufferSlice terrainFog,
         Vector4f fogColor,
         boolean shouldRenderSky,
+        boolean consistentDepthRequired,
         CallbackInfo ci
     ) {
         renderContext.onStartLevelRender();
     }
 
-    @Inject(method = "lambda$addMainPass$0", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/feature/FeatureRenderDispatcher$PreparedFrame;executeSolid()V"))
+    // 26.3: главный проход разбит на executeSolid / executeClassicTransparency / executeOit,
+    // и отрисовка фич получает открытый RenderPass.
+    @Inject(method = "executeSolid", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/feature/FeatureRenderDispatcher$PreparedFrame;executeSolid(Lcom/mojang/renderpearl/api/commands/RenderPass;)V"))
     private void flywheel$beforeSolid(CallbackInfo ci) {
         renderContext.beforeSolid();
     }
 
-    @Inject(method = "lambda$addMainPass$0", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/feature/FeatureRenderDispatcher$PreparedFrame;executeTranslucent()V"))
+    @Inject(method = "executeClassicTransparency", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/feature/FeatureRenderDispatcher$PreparedFrame;executeTranslucent(Lcom/mojang/renderpearl/api/commands/RenderPass;)V"))
     private void flywheel$beforeTranslucent(CallbackInfo ci) {
+        renderContext.beforeTranslucent();
+    }
+
+    @Inject(method = "executeOit", at = @At("HEAD"))
+    private void flywheel$beforeOit(CallbackInfo ci) {
         renderContext.beforeTranslucent();
     }
 

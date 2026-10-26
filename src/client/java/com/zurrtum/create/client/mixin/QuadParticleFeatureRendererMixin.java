@@ -1,8 +1,6 @@
 package com.zurrtum.create.client.mixin;
 
-import com.zurrtum.create.client.catnip.gui.render.GpuTexture;
 import com.mojang.renderpearl.api.buffers.GpuBufferSlice;
-import com.mojang.renderpearl.api.textures.GpuTextureView;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.zurrtum.create.client.ponder.foundation.render.DynamicTransformsHolder;
 import net.minecraft.client.renderer.feature.FeatureFrameContext;
@@ -13,7 +11,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(QuadParticleFeatureRenderer.class)
@@ -36,15 +33,6 @@ public class QuadParticleFeatureRendererMixin implements DynamicTransformsHolder
         }
     }
 
-    @ModifyVariable(method = "executeGroup(Lnet/minecraft/client/renderer/feature/FeatureFrameContext;ILjava/util/List;Z)V", at = @At("STORE"), name = "colorTextureView")
-    private GpuTextureView getColorTexture(GpuTextureView colorTextureView) {
-        GpuTexture target = GpuTexture.current();
-        return target == null ? colorTextureView : target.textureView();
-    }
-
-    @ModifyVariable(method = "executeGroup(Lnet/minecraft/client/renderer/feature/FeatureFrameContext;ILjava/util/List;Z)V", at = @At("STORE"), name = "depthTextureView")
-    private GpuTextureView getDepthTexture(GpuTextureView depthTextureView) {
-        GpuTexture target = GpuTexture.current();
-        return target == null ? depthTextureView : target.depthTextureView();
-    }
+    // 26.3: executeGroup рисует в переданный RenderPass; цель Ponder задаёт сам проход (GpuTexture.openPass),
+    // подменять colorTextureView/depthTextureView больше не нужно.
 }

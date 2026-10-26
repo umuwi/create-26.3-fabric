@@ -9,7 +9,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Blocks.class)
 public class BlocksMixin {
-    @Inject(method = "<clinit>", at = @At(value = "INVOKE", target = "net/minecraft/core/DefaultedRegistry.iterator()Ljava/util/Iterator;"))
+    // 26.3: цикл по BuiltInRegistries.BLOCK ушёл в лямбду SolidDebugger.runAndDump; регистрируемся до неё,
+    // чтобы состояния блоков Create тоже попали в BLOCK_STATE_REGISTRY.
+    @Inject(method = "<clinit>", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/SolidDebugger;runAndDump(Ljava/lang/Runnable;)V"))
     private static void register(CallbackInfo ci) {
         CreateRegisterPlugin.registerBlock();
     }

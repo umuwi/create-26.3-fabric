@@ -182,17 +182,15 @@ public record SequencedAssemblyRecipe(Ingredient ingredient, ItemStackTemplate t
                         lore.add(Component.literal("-> ").append(RecipeName.get(i % sequenceSize))
                             .withStyle(ChatFormatting.DARK_AQUA).withStyle(style -> style.withItalic(false)));
                     }
-                    transitionalComponents.put(
-                        AllDataComponents.SEQUENCED_ASSEMBLY_PROGRESS,
-                        Optional.of((float) index / size)
-                    );
-                    transitionalComponents.put(DataComponents.LORE, Optional.of(new ItemLore(lore, lore)));
+                    // 26.3: в карте DataComponentPatch лежат сами значения, а не Optional.
+                    transitionalComponents.put(AllDataComponents.SEQUENCED_ASSEMBLY_PROGRESS, (float) index / size);
+                    transitionalComponents.put(DataComponents.LORE, new ItemLore(lore, lore));
                     return ItemStackTemplate.CODEC.encodeStart(ops, transitional).getOrThrow();
                 };
                 Supplier<JsonElement> transitionalJsonChanceResult = () -> {
                     transitionalComponents.put(
                         AllDataComponents.SEQUENCED_ASSEMBLY_JUNK,
-                        Optional.of(new SequencedAssemblyJunk(result.chance(), junks))
+                        new SequencedAssemblyJunk(result.chance(), junks)
                     );
                     JsonElement element = transitionalJsonResult.get();
                     transitionalComponents.remove(AllDataComponents.SEQUENCED_ASSEMBLY_JUNK);

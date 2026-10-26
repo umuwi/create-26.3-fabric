@@ -22,7 +22,8 @@ public class GameRendererMixin {
     @Final
     private Minecraft minecraft;
 
-    @ModifyArg(method = "renderLevel(Lnet/minecraft/client/DeltaTracker;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/ProjectionMatrixBuffer;getBuffer(Lorg/joml/Matrix4f;)Lcom/mojang/blaze3d/buffers/GpuBufferSlice;"))
+    // 26.3: renderLevel() без аргументов; первый getBuffer(Matrix4f) — проекция мира, второй — руки/HUD.
+    @ModifyArg(method = "renderLevel()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/ProjectionMatrixBuffer;getBuffer(Lorg/joml/Matrix4f;)Lcom/mojang/renderpearl/api/buffers/GpuBufferSlice;", ordinal = 0))
     private Matrix4f updateProjection(
         Matrix4f projection
     ) {
@@ -30,8 +31,8 @@ public class GameRendererMixin {
         return projection;
     }
 
-    @Inject(method = "renderLevel(Lnet/minecraft/client/DeltaTracker;)V", at = @At("TAIL"))
-    private void recycleAll(DeltaTracker deltaTracker, CallbackInfo ci) {
+    @Inject(method = "renderLevel()V", at = @At("TAIL"))
+    private void recycleAll(CallbackInfo ci) {
         EntityBlockLightLayer.recycleAll();
         EntityBlockLayer.recycleAll();
         EntityBlockMultipleLayer.recycleAll();
