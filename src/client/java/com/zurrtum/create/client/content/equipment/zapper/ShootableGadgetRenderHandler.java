@@ -1,5 +1,7 @@
 package com.zurrtum.create.client.content.equipment.zapper;
 
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.renderer.state.level.FirstPersonHandsAndItemsRenderState;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
@@ -70,7 +72,7 @@ public abstract class ShootableGadgetRenderHandler {
         ItemStack heldItem,
         Minecraft mc,
         EntityRenderDispatcher entityRenderDispatcher,
-        ItemInHandRenderer firstPersonRenderer,
+        FirstPersonHandsAndItemsRenderState handsState,
         PoseStack ms,
         SubmitNodeCollector queue,
         int light,
@@ -84,7 +86,8 @@ public abstract class ShootableGadgetRenderHandler {
         }
 
         AbstractClientPlayer player = mc.player;
-        AvatarRenderer<AbstractClientPlayer> playerrenderer = entityRenderDispatcher.getPlayerRenderer(player);
+        @SuppressWarnings("unchecked")
+        AvatarRenderer<AbstractClientPlayer> playerrenderer = (AvatarRenderer<AbstractClientPlayer>) entityRenderDispatcher.getRenderer(player);
 
         boolean rightHand = hand == InteractionHand.MAIN_HAND ^ player.getMainArm() == HumanoidArm.LEFT;
         float recoil = rightHand ? Mth.lerp(pt, lastRightHandAnimation, rightHandAnimation) :
@@ -144,14 +147,9 @@ public abstract class ShootableGadgetRenderHandler {
         ms.rotate(Axis.YP.rotationDegrees(flip * f6 * 70.0F));
         ms.rotate(Axis.ZP.rotationDegrees(flip * f5 * -20.0F));
         transformTool(ms, flip, equipProgress, recoil, pt);
-        firstPersonRenderer.renderItem(
-            player,
-            heldItem,
-            rightHand ? ItemDisplayContext.FIRST_PERSON_RIGHT_HAND : ItemDisplayContext.FIRST_PERSON_LEFT_HAND,
-            ms,
-            queue,
-            light
-        );
+        // 26.3: предмет в руке уже извлечён в render state первого лица — остаётся отправить его.
+        (hand == InteractionHand.MAIN_HAND ? handsState.mainHandRenderState : handsState.offHandRenderState)
+            .submit(ms, queue, light, OverlayTexture.NO_OVERLAY, 0);
         ms.popPose();
         return true;
     }

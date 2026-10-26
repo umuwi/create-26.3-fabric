@@ -102,15 +102,8 @@ public class GoggleConfigScreen extends AbstractSimiScreen {
     protected void renderWindow(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
         int posX = width / 2 + offsetX;
         int posY = height / 2 + offsetY;
-        graphics.tooltip(
-            font,
-            tooltip.stream().map(Component::getVisualOrderText).map(ClientTooltipComponent::create)
-                .collect(Collectors.toList()),
-            posX,
-            posY,
-            DefaultTooltipPositioner.INSTANCE,
-            null
-        );
+        graphics.tooltip(font, tooltip.stream().map(Component::getVisualOrderText).map(ClientTooltipComponent::create)
+                .collect(Collectors.toList()), posX, posY, DefaultTooltipPositioner.INSTANCE, null, false);
         ItemStack item = AllItems.GOGGLES.getDefaultInstance();
         graphics.item(item, posX + 10, posY - 16);
     }

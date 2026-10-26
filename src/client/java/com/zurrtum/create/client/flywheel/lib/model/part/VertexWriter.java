@@ -76,6 +76,11 @@ public class VertexWriter implements VertexConsumer {
     }
 
     @Override
+    public VertexConsumer setUv3(float u, float v) {
+        return this;
+    }
+
+    @Override
     public VertexConsumer setNormal(float x, float y, float z) {
         if (!filledNormal) {
             long ptr = vertexPtr();

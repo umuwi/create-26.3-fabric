@@ -225,6 +225,11 @@ public class ItemMeshEmitter implements VertexConsumer {
     }
 
     @Override
+    public VertexConsumer setUv3(float u, float v) {
+        throw new UnsupportedOperationException("MeshEmitter only supports putBulkData!");
+    }
+
+    @Override
     public VertexConsumer setNormal(float normalX, float normalY, float normalZ) {
         throw new UnsupportedOperationException("MeshEmitter only supports putBulkData!");
     }

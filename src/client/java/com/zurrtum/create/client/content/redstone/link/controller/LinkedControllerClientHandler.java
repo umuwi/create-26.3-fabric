@@ -275,15 +275,8 @@ public class LinkedControllerClientHandler {
         int y = height1 - height - 24;
 
         // TODO
-        guiGraphics.tooltip(
-            mc.font,
-            list.stream().map(Component::getVisualOrderText).map(ClientTooltipComponent::create)
-                .collect(Collectors.toList()),
-            x,
-            y,
-            DefaultTooltipPositioner.INSTANCE,
-            null
-        );
+        guiGraphics.tooltip(mc.font, list.stream().map(Component::getVisualOrderText).map(ClientTooltipComponent::create)
+                .collect(Collectors.toList()), x, y, DefaultTooltipPositioner.INSTANCE, null, false);
 
         poseStack.popMatrix();
     }

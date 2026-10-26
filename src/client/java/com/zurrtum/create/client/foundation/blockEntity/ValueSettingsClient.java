@@ -98,7 +98,7 @@ public class ValueSettingsClient {
         }
 
         if (interactHeldTicks > 3) {
-            player.swinging = false;
+            // 26.3: прервать взмах руки снаружи нечем (SwingState закрыт) — анимация просто доиграет.
         }
         if (interactHeldTicks++ < 5) {
             return;

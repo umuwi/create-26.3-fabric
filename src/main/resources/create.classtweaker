@@ -267,3 +267,5 @@ accessible field net/minecraft/client/renderer/rendertype/RenderSetup pipeline L
 accessible field net/minecraft/client/gui/render/pip/PictureInPictureRenderer texture Lcom/mojang/renderpearl/api/textures/GpuTexture;
 accessible field net/minecraft/client/gui/render/pip/PictureInPictureRenderer textureView Lcom/mojang/renderpearl/api/textures/GpuTextureView;
 accessible field net/minecraft/client/gui/render/pip/PictureInPictureRenderer depthTextureView Lcom/mojang/renderpearl/api/textures/GpuTextureView;
+accessible field net/minecraft/client/player/FirstPersonHandsAndItems mainHandItem Lnet/minecraft/world/item/ItemStack;
+accessible field net/minecraft/client/player/FirstPersonHandsAndItems offHandItem Lnet/minecraft/world/item/ItemStack;
