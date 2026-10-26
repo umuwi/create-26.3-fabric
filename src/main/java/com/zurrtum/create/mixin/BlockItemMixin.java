@@ -1,5 +1,11 @@
 package com.zurrtum.create.mixin;
 
+import org.jspecify.annotations.Nullable;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.core.BlockPos;
+import com.zurrtum.create.foundation.item.CustomBlockEntityTagItem;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -79,5 +85,20 @@ public class BlockItemMixin {
             return group.get().getPitch();
         }
         return original.call(instance);
+    }
+
+    // 26.3: updateCustomBlockEntityTag стал статическим — отдаём вызов предметам Create.
+    @WrapOperation(method = "place(Lnet/minecraft/world/item/context/BlockPlaceContext;)Lnet/minecraft/world/InteractionResult;", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/BlockItem;updateCustomBlockEntityTag(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/item/ItemStack;)Z"))
+    private boolean customBlockEntityTag(
+        Level level,
+        @Nullable Player player,
+        BlockPos pos,
+        ItemStack stack,
+        Operation<Boolean> original
+    ) {
+        if ((Object) this instanceof CustomBlockEntityTagItem item) {
+            return item.updateCustomBlockEntityTag(pos, level, player, stack, level.getBlockState(pos));
+        }
+        return original.call(level, player, pos, stack);
     }
 }

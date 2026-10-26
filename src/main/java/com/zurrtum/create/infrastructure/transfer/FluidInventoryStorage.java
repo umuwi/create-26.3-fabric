@@ -53,7 +53,7 @@ public interface FluidInventoryStorage extends SlottedStorage<FluidVariant> {
             return true;
         }
         if (otherStackComponents == DataComponentMap.EMPTY) {
-            Reference2ObjectMap<DataComponentType<?>, Optional<?>> stackComponentMap = stackComponents.patch;
+            Reference2ObjectMap<DataComponentType<?>, Object> stackComponentMap = stackComponents.patch;
             int stackComponentCount = stackComponentMap.size();
             if (stackComponentCount == 0) {
                 return true;

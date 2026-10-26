@@ -1,5 +1,6 @@
 package com.zurrtum.create.content.logistics.factoryBoard;
 
+import com.zurrtum.create.foundation.item.CustomBlockEntityTagItem;
 import com.zurrtum.create.AllBlockEntityTypes;
 import com.zurrtum.create.AllSoundEvents;
 import com.zurrtum.create.content.logistics.packagerLink.LogisticallyLinkedBlockItem;
@@ -26,7 +27,7 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
 
-public class FactoryPanelBlockItem extends LogisticallyLinkedBlockItem {
+public class FactoryPanelBlockItem extends LogisticallyLinkedBlockItem implements CustomBlockEntityTagItem {
 
     public FactoryPanelBlockItem(Block pBlock, Properties pProperties) {
         super(pBlock, pProperties);
@@ -46,14 +47,14 @@ public class FactoryPanelBlockItem extends LogisticallyLinkedBlockItem {
     }
 
     @Override
-    protected boolean updateCustomBlockEntityTag(
+    public boolean updateCustomBlockEntityTag(
         BlockPos pos,
         Level level,
         @Nullable Player player,
         ItemStack stack,
         BlockState state
     ) {
-        return super.updateCustomBlockEntityTag(pos, level, player, fixCtrlCopiedStack(stack), state);
+        return BlockItem.updateCustomBlockEntityTag(level, player, pos, fixCtrlCopiedStack(stack));
     }
 
     public static ItemStack fixCtrlCopiedStack(ItemStack stack) {

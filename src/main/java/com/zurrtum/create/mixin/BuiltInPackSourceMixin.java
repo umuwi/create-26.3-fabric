@@ -1,5 +1,7 @@
 package com.zurrtum.create.mixin;
 
+import java.util.stream.Stream;
+import net.minecraft.server.packs.PackMetadataResources;
 import com.zurrtum.create.foundation.pack.DynamicPack;
 import com.zurrtum.create.foundation.pack.RuntimeDataGenerator;
 import net.fabricmc.loader.api.FabricLoader;
@@ -100,22 +102,21 @@ public class BuiltInPackSourceMixin {
         for (Path path : paths) {
             builder.pushAssetPath(PackType.SERVER_DATA, path.resolve(directory));
         }
-        addDataPack(consumer, true, builder.build(info));
+        addDataPack(consumer, true, builder.build(info).fullResources());
     }
 
     @Unique
     private static void addDataPack(Consumer<Pack> consumer, boolean required, PackResources pack) {
+        // 26.3: ResourcesSupplier отдаёт отдельно метаданные и поток слоёв пака.
         Pack.ResourcesSupplier packFactory = new Pack.ResourcesSupplier() {
             @Override
-            @NonNull
-            public PackResources openPrimary(@Nullable PackLocationInfo info) {
+            public PackMetadataResources openMetadata(PackLocationInfo info) {
                 return pack;
             }
 
             @Override
-            @NonNull
-            public PackResources openFull(@NonNull PackLocationInfo info, @NonNull Metadata metadata) {
-                return pack;
+            public Stream<PackResources> openResources(PackLocationInfo info, Metadata metadata) {
+                return Stream.of(pack);
             }
         };
         PackSelectionConfig position = new PackSelectionConfig(required, Pack.Position.BOTTOM, false);

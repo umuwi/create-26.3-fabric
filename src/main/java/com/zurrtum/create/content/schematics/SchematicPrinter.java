@@ -1,5 +1,6 @@
 package com.zurrtum.create.content.schematics;
 
+import com.zurrtum.create.foundation.utility.BlockPosHelper;
 import com.mojang.serialization.Codec;
 import com.zurrtum.create.AllBlocks;
 import com.zurrtum.create.AllDataComponents;
@@ -127,7 +128,7 @@ public class SchematicPrinter {
 
         BlockPos extraBounds = StructureTemplate.calculateRelativePosition(
             settings,
-            new BlockPos(activeTemplate.getSize()).offset(-1, -1, -1)
+            BlockPosHelper.of(activeTemplate.getSize()).offset(-1, -1, -1)
         );
         blockReader.setBounds(BBHelper.encapsulate(blockReader.getBounds(), extraBounds));
 

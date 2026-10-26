@@ -1,5 +1,6 @@
 package com.zurrtum.create.content.logistics.tunnel;
 
+import com.zurrtum.create.foundation.item.CustomBlockEntityTagItem;
 import com.zurrtum.create.AllBlocks;
 import com.zurrtum.create.content.kinetics.belt.BeltBlockEntity;
 import com.zurrtum.create.content.kinetics.belt.BeltBlockEntity.CasingType;
@@ -15,7 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import org.jspecify.annotations.Nullable;
 
-public class BeltTunnelItem extends BlockItem {
+public class BeltTunnelItem extends BlockItem implements CustomBlockEntityTagItem {
 
     public BeltTunnelItem(Block p_i48527_1_, Properties p_i48527_2_) {
         super(p_i48527_1_, p_i48527_2_);
@@ -36,14 +37,14 @@ public class BeltTunnelItem extends BlockItem {
     }
 
     @Override
-    protected boolean updateCustomBlockEntityTag(
+    public boolean updateCustomBlockEntityTag(
         BlockPos pos,
         Level world,
         @Nullable Player p_195943_3_,
         ItemStack p_195943_4_,
         BlockState state
     ) {
-        boolean flag = super.updateCustomBlockEntityTag(pos, world, p_195943_3_, p_195943_4_, state);
+        boolean flag = BlockItem.updateCustomBlockEntityTag(world, p_195943_3_, pos, p_195943_4_);
         if (!world.isClientSide()) {
             BeltBlockEntity belt = BeltHelper.getSegmentBE(world, pos.below());
             if (belt != null && belt.casing == CasingType.NONE) {

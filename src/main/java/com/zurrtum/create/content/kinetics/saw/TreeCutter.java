@@ -1,5 +1,6 @@
 package com.zurrtum.create.content.kinetics.saw;
 
+import com.zurrtum.create.foundation.utility.BlockPosHelper;
 import com.zurrtum.create.AllBlockTags;
 import com.zurrtum.create.catnip.data.Iterate;
 import com.zurrtum.create.foundation.utility.AbstractBlockBreakQueue;
@@ -111,7 +112,7 @@ public class TreeCutter {
 
         visited.add(pos);
         BlockPos.betweenClosedStream(pos.offset(-1, 0, -1), pos.offset(1, 1, 1))
-            .forEach(p -> frontier.add(new BlockPos(p)));
+            .forEach(p -> frontier.add(BlockPosHelper.of(p)));
 
         // Find all logs & roots
         boolean hasRoots = false;
@@ -128,7 +129,7 @@ public class TreeCutter {
                 continue;
             }
             logs.add(currentPos);
-            forNeighbours(currentPos, visited, SearchDirection.UP, p -> frontier.add(new BlockPos(p)));
+            forNeighbours(currentPos, visited, SearchDirection.UP, p -> frontier.add(BlockPosHelper.of(p)));
         }
 
         visited.clear();

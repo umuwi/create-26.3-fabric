@@ -72,7 +72,7 @@ public class ComponentsIngredient extends Ingredient {
         }
 
         // None strict matching
-        for (Map.Entry<DataComponentType<?>, Optional<?>> entry : components.entrySet()) {
+        for (Map.Entry<DataComponentType<?>, Object> entry : components.entrySet()) {
             final DataComponentType<?> type = entry.getKey();
             final Optional<?> value = entry.getValue();
 

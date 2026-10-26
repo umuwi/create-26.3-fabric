@@ -81,17 +81,6 @@ public class ChainConveyorBlock extends KineticBlock implements IBE<ChainConveyo
         return pState;
     }
 
-    @Override
-    public void playerDestroy(
-        Level level,
-        Player player,
-        BlockPos pos,
-        BlockState state,
-        @Nullable BlockEntity blockEntity,
-        ItemStack tool
-    ) {
-        super.playerDestroy(level, player, pos, state, blockEntity, tool);
-    }
 
     @Override
     public InteractionResult onSneakWrenched(BlockState state, UseOnContext context) {

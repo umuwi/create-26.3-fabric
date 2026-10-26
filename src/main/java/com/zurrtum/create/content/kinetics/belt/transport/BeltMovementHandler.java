@@ -1,5 +1,6 @@
 package com.zurrtum.create.content.kinetics.belt.transport;
 
+import com.zurrtum.create.foundation.utility.BlockPosHelper;
 import com.zurrtum.create.AllBlocks;
 import com.zurrtum.create.content.equipment.armor.CardboardArmorHandler;
 import com.zurrtum.create.content.kinetics.belt.BeltBlock;
@@ -44,7 +45,7 @@ public class BeltMovementHandler {
 
         public void refresh(BlockPos collision, BlockState belt) {
             ticksSinceLastCollision = 0;
-            lastCollidedPos = new BlockPos(collision).immutable();
+            lastCollidedPos = BlockPosHelper.of(collision).immutable();
             lastCollidedState = belt;
         }
 

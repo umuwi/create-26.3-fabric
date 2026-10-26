@@ -1,5 +1,6 @@
 package com.zurrtum.create.catnip.placement;
 
+import com.zurrtum.create.foundation.utility.BlockPosHelper;
 import net.minecraft.advancements.triggers.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
@@ -81,7 +82,7 @@ public class PlacementOffset {
             return (BlockPos) pos;
         }
 
-        return new BlockPos(pos);
+        return BlockPosHelper.of(pos);
     }
 
     public Function<BlockState, BlockState> getTransform() {
@@ -102,7 +103,7 @@ public class PlacementOffset {
             return false;
         }
 
-        return world.getBlockState(new BlockPos(pos)).canBeReplaced();
+        return world.getBlockState(BlockPosHelper.of(pos)).canBeReplaced();
     }
 
     public InteractionResult placeInWorld(Level world, BlockItem blockItem, Player player, InteractionHand hand) {
@@ -115,7 +116,7 @@ public class PlacementOffset {
             return InteractionResult.SUCCESS;
         }
 
-        BlockPos newPos = new BlockPos(pos);
+        BlockPos newPos = BlockPosHelper.of(pos);
         ItemStack stackBefore = player.getItemInHand(hand).copy();
 
         if (!world.mayInteract(player, newPos)) {

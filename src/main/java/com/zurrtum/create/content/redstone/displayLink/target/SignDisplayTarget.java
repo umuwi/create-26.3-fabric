@@ -9,6 +9,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
 import net.minecraft.world.level.block.entity.SignText;
+import net.minecraft.world.level.block.entity.SignTextSlot;
 
 import java.util.List;
 
@@ -22,7 +23,8 @@ public class SignDisplayTarget extends DisplayTarget {
         }
 
         boolean changed = false;
-        Couple<SignText> signText = Couple.createWithContext(sign::getText);
+        // 26.3: стороны таблички — SignTextSlot, а SignText меняется только через asMutable().
+        Couple<SignText> signText = Couple.create(sign.getText(SignTextSlot.FRONT), sign.getText(SignTextSlot.BACK));
         DisplayHolder holder = (DisplayHolder) sign;
         for (int i = 0; i < text.size() && i + line < 4; i++) {
             if (i == 0) {
@@ -34,12 +36,12 @@ public class SignDisplayTarget extends DisplayTarget {
 
             final int iFinal = i;
             String content = text.get(iFinal).getString(sign.getMaxTextLineWidth());
-            signText = signText.map(st -> st.setMessage(iFinal + line, Component.literal(content)));
+            signText = signText.map(st -> st.asMutable().setLine(iFinal + line, Component.literal(content)).asImmutable());
             changed = true;
         }
 
         if (changed) {
-            signText.forEachWithContext(sign::setText);
+            signText.forEachWithContext((st, front) -> sign.setText(st, front ? SignTextSlot.FRONT : SignTextSlot.BACK));
             context.level().sendBlockUpdated(context.getTargetPos(), sign.getBlockState(), sign.getBlockState(), 2);
         }
     }
