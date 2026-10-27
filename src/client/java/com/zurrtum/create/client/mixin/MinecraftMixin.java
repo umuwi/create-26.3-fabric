@@ -1,5 +1,7 @@
 package com.zurrtum.create.client.mixin;
 
+import org.spongepowered.asm.mixin.Unique;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.component.SwingAnimation;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -233,7 +235,17 @@ public abstract class MinecraftMixin {
     @Inject(method = "tick()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientLevel;tick(Ljava/util/function/BooleanSupplier;)V", shift = At.Shift.AFTER))
     private void tick(CallbackInfo ci) {
         VisualizationEventHandler.onClientTick((Minecraft) (Object) this, level);
+        // Только для отладки порта: -Dponder.debugOpen=create:shaft открывает сцену Ponder сам,
+        // чтобы проверять её без ручного ввода. Без свойства ничего не делает.
+        if (create$debugPonder != null && level != null && player != null && player.tickCount > 60) {
+            Identifier id = Identifier.parse(create$debugPonder);
+            create$debugPonder = null;
+            com.zurrtum.create.client.catnip.gui.ScreenOpener.open(com.zurrtum.create.client.ponder.foundation.ui.PonderUI.of(id));
+        }
     }
+
+    @Unique
+    private static String create$debugPonder = System.getProperty("ponder.debugOpen");
 
     @Inject(method = "startUseItem()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;getItemInHand(Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/item/ItemStack;"), cancellable = true)
     private void doItemUse(CallbackInfo ci, @Local InteractionHand hand) {

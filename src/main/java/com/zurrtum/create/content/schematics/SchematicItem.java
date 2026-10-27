@@ -1,5 +1,8 @@
 package com.zurrtum.create.content.schematics;
 
+import net.minecraft.util.datafix.DataFixers;
+import net.minecraft.util.datafix.DataFixTypes;
+import net.minecraft.nbt.NbtUtils;
 import com.mojang.logging.LogUtils;
 import com.zurrtum.create.AllClientHandle;
 import com.zurrtum.create.AllDataComponents;
@@ -125,6 +128,8 @@ public class SchematicItem extends Item {
             StandardOpenOption.READ
         ))))) {
             CompoundTag nbt = NbtIo.read(stream, NbtAccounter.create(0x20000000L));
+            // 26.3: схемы старых версий без датафиксера читаются пустыми (см. PonderSceneRegistry).
+            nbt = DataFixTypes.STRUCTURE.updateToCurrentVersion(DataFixers.getDataFixer(), nbt, NbtUtils.getDataVersion(nbt, 500));
             t.load(level.holderLookup(Registries.BLOCK), nbt);
         } catch (IOException e) {
             LOGGER.warn("Failed to read schematic", e);

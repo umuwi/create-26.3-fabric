@@ -1,5 +1,8 @@
 package com.zurrtum.create.client.ponder.foundation.registration;
 
+import net.minecraft.util.datafix.DataFixers;
+import net.minecraft.util.datafix.DataFixTypes;
+import net.minecraft.nbt.NbtUtils;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 import com.zurrtum.create.client.ponder.Ponder;
@@ -169,7 +172,10 @@ public class PonderSceneRegistry implements SceneRegistryAccess {
         StructureTemplate t = new StructureTemplate();
         DataInputStream stream = new DataInputStream(new BufferedInputStream(new GZIPInputStream(resourceStream)));
         CompoundTag nbt = NbtIo.read(stream, NbtAccounter.create(0x20000000L));
-        //t.load(Minecraft.getInstance().level.holderLookup(Registries.BLOCK), nbt);
+        // 26.3: формат состояний блоков в NBT сменился, а структуры Ponder сохранены старыми версиями.
+        // Без датафиксера (как в ванильном TemplateSource) все блоки сцен становились воздухом —
+        // 27.10.2026 в Ponder были видны только частицы.
+        nbt = DataFixTypes.STRUCTURE.updateToCurrentVersion(DataFixers.getDataFixer(), nbt, NbtUtils.getDataVersion(nbt, 500));
         t.load(BuiltInRegistries.BLOCK, nbt);
         return t;
     }
