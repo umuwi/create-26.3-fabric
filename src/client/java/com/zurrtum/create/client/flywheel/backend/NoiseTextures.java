@@ -48,7 +48,9 @@ public class NoiseTextures {
             texture = device.createTexture(
                 () -> "Flywheel Blue Noise",
                 5,
-                GpuFormat.R8_UNORM,
+                // 26.3: NativeImage.read всегда даёт RGBA, а запись требует совпадения каналов;
+                // шейдер читает только .r, так что RGBA8 вместо R8 ничего не меняет.
+                GpuFormat.RGBA8_UNORM,
                 pixels.getWidth(),
                 pixels.getHeight(),
                 1,

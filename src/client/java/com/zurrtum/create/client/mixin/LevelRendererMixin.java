@@ -106,16 +106,20 @@ public abstract class LevelRendererMixin implements RenderContextHolder {
         renderContext.onStartLevelRender();
     }
 
-    // 26.3: главный проход разбит на executeSolid / executeClassicTransparency / executeOit,
-    // и отрисовка фич получает открытый RenderPass.
-    @Inject(method = "executeSolid", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/feature/FeatureRenderDispatcher$PreparedFrame;executeSolid(Lcom/mojang/renderpearl/api/commands/RenderPass;)V"))
+    // 26.3: главный проход разбит на executeSolid / executeClassicTransparency / executeOit внутри одного
+    // открытого RenderPass. Flywheel рисует сырым GL и меняет фреймбуфер, поэтому внутри прохода он ломал
+    // всё, что шло следом (27.10.2026: пропали частицы, предметы, мобы и облака). Вызываем его вне прохода:
+    // непрозрачное — до открытия, полупрозрачное без OIT — после закрытия, с OIT — перед executeOit.
+    @Inject(method = "lambda$addMainPass$0", at = @At(value = "INVOKE", target = "Lcom/mojang/renderpearl/api/device/GpuDevice;createCommandEncoder()Lcom/mojang/renderpearl/api/commands/CommandEncoder;"))
     private void flywheel$beforeSolid(CallbackInfo ci) {
         renderContext.beforeSolid();
     }
 
-    @Inject(method = "executeClassicTransparency", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/feature/FeatureRenderDispatcher$PreparedFrame;executeTranslucent(Lcom/mojang/renderpearl/api/commands/RenderPass;)V"))
+    @Inject(method = "lambda$addMainPass$0", at = @At(value = "INVOKE", target = "Lcom/mojang/renderpearl/api/commands/RenderPass;close()V", ordinal = 0, shift = At.Shift.AFTER))
     private void flywheel$beforeTranslucent(CallbackInfo ci) {
-        renderContext.beforeTranslucent();
+        if (!Minecraft.getInstance().gameRenderer.useImprovedTransparency()) {
+            renderContext.beforeTranslucent();
+        }
     }
 
     @Inject(method = "executeOit", at = @At("HEAD"))

@@ -12,6 +12,7 @@ import java.util.EnumMap;
 import java.util.Map;
 
 public final class LevelUniforms extends UniformWriter {
+    private static final Vector3fc ZERO = new org.joml.Vector3f();
     private static final int SIZE = 16 * 4 + 4 * 12;
     static final UniformBuffer BUFFER = new UniformBuffer(Uniforms.LEVEL_INDEX, SIZE);
     static final Map<Lighting.Entry, float[]> CACHE = new EnumMap<>(Lighting.Entry.class);
@@ -43,7 +44,8 @@ public final class LevelUniforms extends UniformWriter {
         SkyRenderState skyRenderState = levelRenderState.skyRenderState;
 
         // 26.3: цвет неба — Vector3fc (0..1), а не упакованный ARGB.
-        Vector3fc skyColor = skyRenderState.skyColor;
+        // На первом кадре мира небо ещё не извлечено (null) — 27.10.2026 из-за этого Flywheel падал на instancing.
+        Vector3fc skyColor = skyRenderState.skyColor != null ? skyRenderState.skyColor : ZERO;
         int cloudColor = levelRenderState.cloudColor;
         ptr = writeVec4(ptr, skyColor.x(), skyColor.y(), skyColor.z(), 1.0f);
         ptr = writeVec4(ptr, ARGB.redFloat(cloudColor), ARGB.greenFloat(cloudColor), ARGB.blueFloat(cloudColor), 1.0f);
